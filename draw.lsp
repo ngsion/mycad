@@ -4,7 +4,7 @@
   (setq current-precision (getvar "luprec"))
   (setq new-precision 4)  ; 设置新的线性单位精度（小数点后4位）
   (setvar "luprec" new-precision)
-  (setq scaling-factor (/ 0.184 1.0))  ; 计算新的单位缩放因子, cross 间距0.184mm，在这里是1，
+  (setq scaling-factor (/ 0.184 1.0))  ; 计算新的单位缩放因子, cross 间距0.184mm，在这里是1， 这里的长度除以5.43就得到真实的，单位为mm
   (setvar "dimlfac" scaling-factor)
   (setq annotative-scale (/ 0.184 1.0))
   (setvar "dimscale" annotative-scale)
@@ -13,6 +13,7 @@
   
   (setq width 648)
   (setq height 480)
+  (setq offset 0.054)  ; notch离像素墙中心的距离为10微米
   
   ;绘制矩形
    (setq a (list -1 -1))
@@ -77,7 +78,7 @@
                             ;;;;;;;;;;;绘制notch
                             
                             
-                             (setq base-point (list xpos+1 ypos+1)) 
+                             (setq base-point (list xpos+1-offset ypos+1-offset)) 
                             (setq side1-length 0.38)
                             (setq side2-length 0.189)
 
@@ -104,7 +105,7 @@
                             ;;;;;;;;;;;绘制notch
                             
                             
-                             (setq base-point (list xpos-1 ypos-1)) 
+                             (setq base-point (list xpos-1+offset ypos-1+offset)) 
                             (setq side1-length 0.38)
                             (setq side2-length 0.189)
 
