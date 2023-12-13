@@ -50,7 +50,7 @@
                      (progn
                       
                        ;; 1 的 ascii码为49， 2 的ascii码为50， 4 的ascii码为52
-                        (if (equal char 50)
+                        (if (equal char 49)
                           (progn
                           ;  (princ (strcat (chr char) " "))
                             
@@ -58,27 +58,30 @@
                             
                             
                            ;;;;;;;;;;;;;绘制圆，表示柱子
-                            ;(setq pt (list xpos ypos)) ; 定义坐标点 
-                           ; (setq radius 0.054)
-                           ; (command "circle" pt radius)
-                            ;(setq ent (entmake (list '(0 . "POINT") (cons 10 pt)))) ; 创建点实体
+                            (setq pt (list xpos ypos)) ; 定义坐标点 
+                            (setq radius 0.054)
+                            (command "circle" pt radius)
+                            (setq ent (entmake (list '(0 . "POINT") (cons 10 pt)))) ; 创建点实体
                             
                             
+                          );progn
+                        );if
+                       
+                        (if (equal char 50)
+                          (progn
+                          ;  (princ (strcat (chr char) " "))
                             
+                            (setvar "cmdecho" 0)  ; 禁止命令行输出
                             
+                      
                             ;;;;;;;;;;;绘制notch
                             
                             
-                             (setq base-point (list xpos ypos)) 
+                             (setq base-point (list xpos+1 ypos+1)) 
                             (setq side1-length 0.38)
                             (setq side2-length 0.189)
 
                             ; 2-notch 画直角三角形
-                            (setq point2 (polar base-point 0 side1-length))
-                            (setq point3 (polar base-point (/ pi 2) side2-length))
-                            
-                            
-                            ; 4-notch 画直角三角形
                             ; (setq point2 (polar base-point pi side1-length))
                             ;(setq point3 (polar base-point (/ pi -2) side2-length))
     
@@ -90,7 +93,34 @@
                             
                           );progn
                         );if
-                       
+
+                        (if (equal char 51)
+                          (progn
+                          ;  (princ (strcat (chr char) " "))
+                            
+                            (setvar "cmdecho" 0)  ; 禁止命令行输出
+                            
+                      
+                            ;;;;;;;;;;;绘制notch
+                            
+                            
+                             (setq base-point (list xpos-1 ypos-1)) 
+                            (setq side1-length 0.38)
+                            (setq side2-length 0.189)
+
+                            ; 4-notch 画直角三角形
+                            (setq point2 (polar base-point 0 side1-length))
+                            (setq point3 (polar base-point (/ pi 2) side2-length))
+                            
+    
+                            
+                            
+                            (command "pline" base-point point2 point3 base-point "")
+                            
+                            (setvar "cmdecho" 1)  ; 恢复命令行输出
+                            
+                          );progn
+                        );if
                        
                         (setq xpos (+ xpos 1))
                        
