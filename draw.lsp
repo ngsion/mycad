@@ -1,43 +1,41 @@
 (defun c:myplot () 
 
   (setq insunits 4) ; 设置坐标单位为毫米
+  (princ "Custom units set successfully.")
 
   (setq cmdecho (getvar "cmdecho"))
   (setq osmode (getvar "osmode"))
+  (setq current-precision (getvar "luprec"))
 
   (setvar "cmdecho" 0) ; 禁止命令行输出
   (setvar "osmode" 0) ;  关闭捕捉模式
-
-
-  (setq current-precision (getvar "luprec"))
   (setq new-precision 4) ; 设置新的线性单位精度（小数点后4位）
   (setvar "luprec" new-precision)
+
+
+
   (setq scaling-factor (/ 0.184 1.0)) ; 计算新的单位缩放因子, cross 间距0.184mm，在这里是1， 这里的长度除以5.435就得到真实的，单位为mm
-  (setvar "dimlfac" scaling-factor)
-  (setq annotative-scale (/ 0.184 1.0))
-  (setvar "dimscale" annotative-scale)
-  (princ "Custom units set successfully.")
 
 
   (setq width 648)
   (setq height 480)
-  (setq radius 0.0386) ;柱子半径为7.1微米
-  (setq radi 0.0435) ; 银浆半径为8微米
-  (setq margin 0.217) ; 银浆离像素墙中心的距离为40微米
+  (setq radius 0.0071) ;柱子半径为7.1微米
+  (setq radi 0.0080) ; 银浆半径为8微米
+  (setq margin 0.040) ; 银浆离像素墙中心的距离为40微米
   (setq semi-height (/ height 2))
   (setq semi-width (/ width 2))
 
 
   ;绘制矩形
-  (setq a (list -1 -1))
-  (setq w (+ width 3))
-  (setq h (+ height 3))
+  ;(setq a (list -1 -1))
+  ; (setq w (+ width 3))
+  ;(setq h (+ height 3))
   ;b, c, d矩形的另外四个点的坐标值，由a,w,h计算得出
-  (setq b (polar a 0 w))
-  (setq c (polar b (/ pi 2) h))
-  (setq d (polar c pi w))
+  ;(setq b (polar a 0 w))
+  ; (setq c (polar b (/ pi 2) h))
+  ;(setq d (polar c pi w))
   ;根据a，b，c，d四个点绘制矩形
-  (command "pline" a b c d "c")
+  ;(command "pline" a b c d "c")
 
 
   (setq file (open "F:\\mycad\\mycad\\result_648X480_start_1_21_1160.txt" "r")) ; 打开文件
@@ -76,11 +74,14 @@
                       (progn 
 
                         (setq xx (+ xpos 1))
-                        (setq xxx (- xx margin))
                         (setq yy (+ ypos 1))
-                        (setq yyy (- yy margin))
+                        (setq xxx (* xx scaling-factor))
+                        (setq yyy (* yy scaling-factor))
 
-                        (setq pt (list xxx yyy))
+
+                        (setq xxxx (- xxx margin))
+                        (setq yyyy (- yyy margin))
+                        (setq pt (list xxxx yyyy))
 
                         (command "circle" pt radi)
 
@@ -97,11 +98,13 @@
                             ;;;;;;;;;;;绘制
 
                             (setq xx (+ xpos 1))
-                            (setq xxx (- xx margin))
                             (setq yy (+ ypos 1))
-                            (setq yyy (- yy margin))
+                            (setq xxx (* xx scaling-factor))
+                            (setq yyy (* yy scaling-factor))
 
-                            (setq pt (list xxx yyy))
+                            (setq xxxx (- xxx margin))
+                            (setq yyyy (- yyy margin))
+                            (setq pt (list xxxx yyyy))
 
                             (command "circle" pt radi)
 
@@ -127,11 +130,13 @@
 
 
                                     (setq xx (- xpos 1))
-                                    (setq xxx (+ xx margin))
                                     (setq yy (- ypos 1))
-                                    (setq yyy (+ yy margin))
+                                    (setq xxx (* xx scaling-factor))
+                                    (setq yyy (* yy scaling-factor))
 
-                                    (setq pt (list xxx yyy))
+                                    (setq xxxx (+ xxx margin))
+                                    (setq yyyy (+ yyy margin))
+                                    (setq pt (list xxxx yyyy))
 
 
                                     (command "circle" pt radi)
@@ -165,6 +170,7 @@
 
   (setvar "cmdecho" cmdecho) ; 恢复命令行输出
   (setvar "osmode" osmode) ;恢复捕捉
+  (setvar "luprec" current-precision) ; 恢复精度
 )
 
 
