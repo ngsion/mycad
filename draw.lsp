@@ -20,7 +20,7 @@
   (setq width 648)
   (setq height 480)
   (setq radius 0.0071) ;柱子半径为7.1微米
-  (setq radi 0.0080) ; 银浆半径为8微米
+  (setq radi 0.0010) ; 银浆半径为1微米
   (setq margin 0.040) ; 银浆离像素墙中心的距离为40微米
   (setq semi-height (/ height 2))
   (setq semi-width (/ width 2))
@@ -85,6 +85,17 @@
 
                         (command "circle" pt radi)
 
+                        ; (setq ent (entmake (list '(0 . "POINT") (cons 2 pt)))) ; 创建点实体
+
+                        ;         (entmake
+                        ; (list
+                        ;   (cons 0 "POINT")
+                        ;   (cons 10 pt)
+                        ;   (cons 62 8)
+                        ; )
+                        ; )
+
+
                         (setq xpos (+ xpos 1))
                       )
                       (progn 
@@ -107,6 +118,15 @@
                             (setq pt (list xxxx yyyy))
 
                             (command "circle" pt radi)
+
+                            ;  (setq ent (entmake (list '(0 . "POINT") (cons 2 pt)))) ; 创建点实体
+                            ;(entmake
+                            ;  (list
+                            ;     (cons 0 "POINT")
+                            ;    (cons 10 pt)
+                            ;    (cons 62 8)
+                            ;   )
+                            ; )
 
                             (setq xpos (+ xpos 1))
                           ) ;progn
@@ -139,7 +159,17 @@
                                     (setq pt (list xxxx yyyy))
 
 
-                                    (command "circle" pt radi)
+                                    ;(setq ent (entmake (list '(0 . "POINT") (cons 2 pt)))) ; 创建点实体
+
+                                    ;   (entmake
+                                    ; (list
+                                    ;   (cons 0 "POINT")
+                                    ;   (cons 10 pt)
+                                    ;   (cons 62 8)
+                                    ;)
+                                    ; )
+
+                                    ;    (command "circle" pt radi)
 
                                     (setq xpos (+ xpos 1))
                                   ) ;progn
